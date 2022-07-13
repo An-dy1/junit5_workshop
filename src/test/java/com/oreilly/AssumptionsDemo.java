@@ -19,6 +19,7 @@ public class AssumptionsDemo {
         int size = stack.size();
 
         // Pre-condition violation: Only continue if stack is not empty
+        // test is aborted if this fails, but it's not a failed test
         assumeTrue(size > 0, "Stack must not be empty");
 
         // We wanted to test the pop method, but only if the precondition is true

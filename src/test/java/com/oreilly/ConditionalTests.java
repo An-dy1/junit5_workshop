@@ -67,7 +67,7 @@ public class ConditionalTests {
     }
 
     @Test
-    @EnabledIf("customCondition")  // new in JUnit 5.7
+    @EnabledIf("customCondition")  // new in JUnit 5.7, refers to method, see below
     void enabled() {
         // ...
     }

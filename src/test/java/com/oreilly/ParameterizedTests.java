@@ -23,6 +23,7 @@ public class ParameterizedTests {
     private final List<Month> months =
             Stream.of(Month.values()).toList();
 
+    // this references the value source argumentss
     @ParameterizedTest(name = "{0} is prime and less than 20")
     @ValueSource(ints = {2, 3, 5, 7, 11, 13, 17, 19})
     void valueIsPrime(int arg) {
