@@ -56,6 +56,8 @@ public class AssertionsDemo {
         else return null;
     }
 
+    // for example, test lots of different properties on an object
+    // the series of lambda functions means they will all run even if one fails
     @Test
     void assertAllBook() {
         Book book = findByIsbn("149197317X");
@@ -75,6 +77,7 @@ public class AssertionsDemo {
                 // Null check on title always runs
                 () -> ISBNValidator.getInstance().isValidISBN10(book.getIsbn()),
                 () -> {
+                    // if this fails, then the rest *inside* this lambda function won't run
                     assertNotNull(book.getTitle());
 
                     // The rest of the block skipped if null title
@@ -96,7 +99,10 @@ public class AssertionsDemo {
             throw new IllegalArgumentException("Parsing problem");
     }
 
-    // In JUnit 4, this would be @Test(expected=IllegalArgumentException.class)
+    // In JUnit 4, this would be @Test(expected=IllegalArgumentException.class) - drawback is that anything else in this test that
+    // throws an IllegalArgumentsException would cause the test the pass even if the method in question didn't run but something else threw this exception
+    // assertThrows returns the exception
+    // JUnit 5's way of handling an expected error being thrown
     @Test
     void exceptionTesting() {
         Exception ex = assertThrows(IllegalArgumentException.class,
@@ -137,12 +143,14 @@ public class AssertionsDemo {
 
     @Test
     @Disabled("Disable until demo")
+    // executable can throw an exception, so the Thread.sleep doesn't need to be wrapped in a try-catch block
     void timeoutExceeded() {
         assertTimeout(Duration.ofMillis(100), () -> Thread.sleep(200));
     }
 
     @Test
     @Disabled("Disable until demo")
+    // Executable called in a different thread
     void timeoutExceededWithPreemption() {
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> Thread.sleep(200));
     }

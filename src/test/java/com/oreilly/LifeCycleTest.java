@@ -5,7 +5,10 @@ import org.junit.jupiter.api.*;
 import java.lang.reflect.Method;
 import java.util.Optional;
 
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+// OR:
+// @TestInstance(TestInstance.Lifecycle.PER_METHOD)
+// @AfterAll method 'void com.oreilly.LifeCycleTest.afterAll()' must be static unless the test class is annotated with @TestInstance(Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class LifeCycleTest {
     public LifeCycleTest() {
         System.out.println("Constructor");
@@ -21,6 +24,7 @@ public class LifeCycleTest {
         System.out.println("BeforeEach");
     }
 
+    // todo: note the display name instead of the long function names
     @Test @DisplayName("A test with arguments")
     protected void test1(TestInfo info, TestReporter reporter) {
         reporter.publishEntry("test1", info.getDisplayName());
